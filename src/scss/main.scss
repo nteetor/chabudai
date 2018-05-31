@@ -1,0 +1,40 @@
+.chabudai {
+  th[scope="row"] {
+    cursor: pointer;
+  }
+
+  td {
+    padding: 0;
+    vertical-align: inherit;
+
+    .form-control {
+      background-color: inherit;
+      border: none;
+      border-radius: 0;
+    }
+
+    .form-control[readonly] {
+      background-color: inherit;
+    }
+
+    .form-control:focus {
+      background-color: inherit;
+      box-shadow: none;
+    }
+
+    .custom-select {
+      border: none;
+      border-radius: 0;
+      background-image: none;
+      cursor: pointer;
+    }
+
+    .custom-select:focus {
+      box-shadow: none;
+    }
+
+    &.editing .custom-select {
+      background-color: blue; // #b8daff;
+    }
+  }
+}
