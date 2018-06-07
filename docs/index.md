@@ -4,7 +4,7 @@ layout: home
 
 # Chabudai
 
-A table plugin for Bootstrap 4.
+A table plugin for Bootstrap 4. ([github](https://github.com/nteetor/chabudai))
 
 * Edit a cell by clicking on it.
 * Edit a row as JSON by clicking in the `#` column.
