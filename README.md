@@ -13,7 +13,8 @@ Use `.table({ "data": .. }` to create a table. See https://nteetor.github.com/ch
 
 # Config options
 
-| Name    | Description | Default |                                                                                                                          | :---    | :---------- | :------ |
+| Name    | Description | Default |                                                                                          
+| :---    | :---------- | :------ |
 | data    | A JSON array specifying the table's data | `[]` |
 | headers  | The column headers. | The names found in `data` |
 | paginate | The number of rows to display on each page or `false` to prevent pagination | 10 |
