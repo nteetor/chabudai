@@ -4,20 +4,23 @@ A small table plugin for Bootstrap 4. Includes pagination, cell and row editing.
 
 # Usage
 
-```js
-$("#myTable").table(json, config);
-```
+Download [chabudai.min.js](dist/js/chabudai.min.js) and [chabudai.min.css](dist/css/chabudai.min.css).
+Include these files in a page header *after* Bootstrap and jQuery.
 
-# Config
+# Creating a table
 
-```
-{
-  headers: ..,      # defaults to `json` keys, the column headers
-  paginate: 10,     # the number of rows to display on each page
-  nav: {
-    items: 5,       # the number of navigation items to show at a time, excludes < and >
-    prev: "&lang;", # symbol to use for the previous navigation item
-    next: "&rang;"  # symbol to use for the next navigation item
-  }
-}
-```
+Use `.table({ "data": .. }` to create a table. See https://nteetor.github.com/chabudai/ for examples.
+
+# Config options
+
+| Name    | Description | Default |                                                                                                                          | :---    | :---------- | :------ |
+| data    | A JSON array specifying the table's data | `[]` |
+| headers  | The column headers. | The names found in `data` |
+| paginate | The number of rows to display on each page or `false` to prevent pagination | 10 |
+| responsive | Is the table responsive? If `true` the table will scroll horizontally when too large for a page | `false` |
+| filled | Fill final page to keep pagination nav vertically steady | `true` |
+| nav     | An object specifying config options for the pagination nav, see below | |
+| nav.align | One of `"left"`, `"center"`, or `"right"` specifying the alignment of the nav | `"center"` |
+| nav.items | The number of navigation items to display, if necssary a next and prev item are added | 5 |
+| nav.prev | The symbol used on the previous nav item | `"&lang;"` |
+| nav.next | The symbol used on the next nav item | `"&rang;"` |
