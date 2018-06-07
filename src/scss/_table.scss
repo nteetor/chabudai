@@ -1,0 +1,64 @@
+.table-chabudai {
+  tr[aria-hidden] {
+    th {
+      border: transparent 1px solid;
+    }
+  }
+
+  th {
+    cursor: pointer;
+
+    &:first-child {
+      cursor: default;
+    }
+  }
+
+  td {
+    padding: .35rem .75rem;
+    vertical-align: inherit;
+    white-space: nowrap;
+
+    input {
+      display: inline-block;
+      border: none;
+      padding: .375rem .75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      background-clip: padding-box;
+      background-color: inherit;
+    }
+
+    input:focus {
+      box-shadow: none;
+      outline: none;
+    }
+
+    textarea {
+      width: 100%;
+      border: none;
+      border-radius: 0;
+    }
+
+    textarea:focus {
+      box-shadow: none;
+      outline: none;
+    }
+
+    select {
+      min-width: 100%;
+      width: auto;
+      border: none;
+      background-color: inherit;
+      cursor: pointer;
+    }
+
+    select:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  .selected {
+    background-color: $selected-bg;
+  }
+}
