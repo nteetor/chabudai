@@ -1,4 +1,12 @@
 (function($) {
+  const all = function(array, type) {
+    if (!array.length) {
+      return false;
+    }
+
+    return array.reduce((acc, cur) => acc && typeof cur === type, true);
+  };
+
   $.fn.table = function(config) {
     config = config || {};
 
@@ -43,7 +51,12 @@
         "next": "&rang;",
         "align": "center"
       }
-    }, config);
+    }, config, this[0].dataset);
+
+    options.navItems = options.navItems || options.nav.items;
+    options.navPrev = options.navPrev || options.nav.prev;
+    options.navNext = options.navNext || options.nav.next;
+    options.navAlign = options.navAlign || options.nav.align;
 
     options.data = options.data || [];
 
@@ -105,7 +118,7 @@
             Object.values(row).map(v => {
               if (Array.isArray(v)) {
                 if (v.length === 0) {
-                  return $("<td></td>");
+                  return $(`<td><input type="text" value=""></td>`);
                 }
 
                 let options = v.map(x => `<option value="${ x }">${ x }</option>`).join("");
@@ -275,14 +288,14 @@
 
       while (items[i].classList.contains("d-none")) i++;
 
-      while (i < (items.length - options.nav.items) && n < options.nav.items) {
+      while (i < (items.length - options.navItems) && n < options.navItems) {
         items[i].classList.add("d-none");
         n++;
         i++;
       }
 
       n = 0;
-      while (i < items.length && n < options.nav.items) {
+      while (i < items.length && n < options.navItems) {
         items[i].classList.remove("d-none");
         n++;
         i++;
@@ -303,14 +316,14 @@
 
       while (items[i].classList.contains("d-none")) i--;
 
-      while (i >= options.nav.items && n < options.nav.items) {
+      while (i >= options.navItems && n < options.navItems) {
         items[i].classList.add("d-none");
         n++;
         i--;
       }
 
       n = 0;
-      while (i >= 0 && n < options.nav.items) {
+      while (i >= 0 && n < options.navItems) {
         items[i].classList.remove("d-none");
         n++;
         i--;
@@ -331,13 +344,13 @@
       $nav = $("<nav>");
 
       // if we need to add the next and prev additional nav items
-      if (items.length > options.nav.items) {
-        for (let j = options.nav.items; j < items.length; j++) {
+      if (items.length > options.navItems) {
+        for (let j = options.navItems; j < items.length; j++) {
           items[j][0].classList.add("d-none");
         }
 
-        items.unshift($(`<li class="page-item disabled"><a class="page-link">${ options.nav.prev }</a></li>`));
-        items.push($(`<li class="page-item"><a class="page-link">${ options.nav.next }</a></li>`));
+        items.unshift($(`<li class="page-item disabled"><a class="page-link">${ options.navPrev }</a></li>`));
+        items.push($(`<li class="page-item"><a class="page-link">${ options.navNext }</a></li>`));
 
         $nav.on("click", "li:first-child:not(.disabled)", function(e) {
           navPrev();
