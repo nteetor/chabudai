@@ -1,8 +1,8 @@
 {
   "name": "chabudai",
-  "version": "0.0.8",
+  "version": "0.0.5-1",
   "description": "A small Bootstrap 4 table plugin.",
-  "main": "dist/chabudai.min.js",
+  "main": "dist/js/chabudai.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "js-lint": "eslint src/js/**/*.js",
