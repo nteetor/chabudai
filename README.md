@@ -13,12 +13,13 @@ Use `.table({ "data": .. }` to create a table. See https://nteetor.github.com/ch
 
 # Config options
 
-| Name    | Description | Default |                                                                                          
+| Name    | Description | Default |
 | :---    | :---------- | :------ |
 | data    | A JSON array specifying the table's data | `[]` |
 | headers  | The column headers. | The names found in `data` |
 | paginate | The number of rows to display on each page or `false` to prevent pagination | 10 |
 | responsive | Is the table responsive? If `true` the table will scroll horizontally when too large for a page | `false` |
+| editable | An array of column names indicating which columns may be edited, `true` is interpreted as all columns and `false` as none | `true` |
 | filled | Fill final page to keep pagination nav vertically steady | `true` |
 | nav     | An object specifying config options for the pagination nav, see below | |
 | nav.align | One of `"left"`, `"center"`, or `"right"` specifying the alignment of the nav | `"center"` |

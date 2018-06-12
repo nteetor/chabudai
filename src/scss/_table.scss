@@ -56,6 +56,13 @@
       box-shadow: none;
       outline: none;
     }
+
+    select:disabled {
+      color: inherit;
+      background-color: inherit;
+      background-image: none;
+      cursor: default;
+    }
   }
 
   .selected {

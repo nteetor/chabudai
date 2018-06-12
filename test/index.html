@@ -14,15 +14,15 @@
   <script>
     $(function() {
     $("#table1").table({ "data": iris });
-    $("#table2").table({ "data": starwars });
-    $("#table3").table({ "data": films.slice(1, 33) });
+    $("#table2").table({ "data": starwars }); <!-- , "responsive": true }); -->
+    $("#table3").table({ "data": populations, "editable": ["country"] });
     });
   </script>
 </head>
 <body>
   <div class="p-5">
     <table id="table1" class="table table-bordered"></table>
-    <table id="table2" class="table"></table>
+    <table id="table2" data-responsive="true" data-nav-items="8" class="table"></table>
     <table id="table3" class="table"></table>
   </div>
 </body>

@@ -44,6 +44,7 @@
       "headers": config.data && config.data.length ? Object.keys(config.data[0]) : [],
       "paginate": 10,
       "responsive": false,
+      "editable": false,
       "filled": true,
       "nav": {
         "items": 5,
@@ -51,12 +52,20 @@
         "next": "&rang;",
         "align": "center"
       }
-    }, config, this[0].dataset);
+    }, this[0].dataset, config);
 
     options.navItems = options.navItems || options.nav.items;
     options.navPrev = options.navPrev || options.nav.prev;
     options.navNext = options.navNext || options.nav.next;
     options.navAlign = options.navAlign || options.nav.align;
+
+    if (!Array.isArray(options.editable)) {
+      if (options.editable === "true" || options.editable === true) {
+        options.editable = options.headers;
+      } else {
+        options.editable = [];
+      }
+    }
 
     options.data = options.data || [];
 
@@ -95,7 +104,8 @@
         ["#", ...options.headers].map(h => {
           return $("<col>", {
             "span": 1,
-            "data-variable": h
+            "data-variable": h,
+            "data-disabled": options.editable.indexOf(h) === -1 ? "true" : "false"
           });
         })
       )
@@ -115,16 +125,19 @@
           return $("<tr>").append(
             $("<th>", { scope: "row" })
               .html(index + 1),
-            Object.values(row).map(v => {
-              if (Array.isArray(v)) {
-                if (v.length === 0) {
-                  return $(`<td><input type="text" value=""></td>`);
+            Object.keys(row).map(key => {
+              let value = row[key];
+              let disable = options.editable.indexOf(key) === -1;
+
+              if (Array.isArray(value)) {
+                if (value.length === 0) {
+                  return $(`<td><input type="text" value="" ${ disable ? "disabled" : "" }></td>`);
                 }
 
-                let options = v.map(x => `<option value="${ x }">${ x }</option>`).join("");
-                return $(`<td><select class="custom-select">${ options }</select></td>`);
+                let choices = value.map(v => `<option value="${ v }">${ v }</option>`).join("");
+                return $(`<td><select class="custom-select" ${ disable ? "disabled" : "" }>${ choices }</select></td>`);
               } else {
-                return $(`<td><input type="text" value="${ v }"></td>`);
+                return $(`<td><input type="text" value="${ value }" ${ disable ? "disabled" : "" }></td>`);
               }
             })
           );
@@ -143,7 +156,7 @@
     /*
      * Editing
      */
-    var stopEditing = function() {
+    const stopEditing = function() {
       if (!editing) {
         return;
       }
@@ -152,17 +165,27 @@
         editing.classList.remove("editing");
       } else if (editing.tagName.match(/tr/i)) {
         let input = editing.querySelector("td textarea");
-        let values = Object.values(JSON.parse(input.value));
+        let values = JSON.parse(input.value);
 
         editing.removeChild(input.parentNode);
-        Array.prototype.forEach.call(editing.getElementsByTagName("td"), (td, i) => {
-          td.style = null;
-          td.firstChild.value = values[i];
+
+        Object.keys(values).forEach(key => {
+          let index = Array.prototype.indexOf.call(
+            $plugin[0].querySelectorAll("col"),
+            $plugin[0].querySelector(`col[data-variable="${ key }"]`)
+          );
+          editing.children[index].firstChild.value = values[key];
         });
+
+        Array.prototype.forEach.call(
+          editing.getElementsByTagName("td"),
+          td => td.style = null
+        );
 
         editing.classList.remove("editing");
       }
 
+      $plugin.trigger($.Event("chabudai:edited", { "target": editing }));
       editing = null;
     };
 
@@ -172,19 +195,28 @@
       }
 
       if (el.tagName.match(/td/i)) {
+        let index = Array.prototype.indexOf.call(el.parentNode.children, el);
+        if ($plugin[0].querySelector(`col:nth-child(${ index + 1 })`).dataset.disabled === "true") {
+          return;
+        }
         editing = el;
       } else if (el.tagName.match(/th/i)) {
-        editing = el.parentNode;
-
-        let cells = editing.getElementsByTagName("td");
+        let cells = el.parentNode.getElementsByTagName("td");
         let values = Array.prototype.map.call(cells, el => el.firstChild.value);
-        let headers = Array.prototype.map.call(
+        let headers = Array.prototype.filter.call(
           $plugin[0].querySelectorAll(`thead th[scope="col"]`),
-          el => el.innerHTML
+          el => $plugin[0].querySelector(`col[data-variable="${ el.innerHTML }"]`).dataset.disabled === "false"
         );
 
+        // if all columns are disabled then do not edit
+        if (!headers.length) {
+          return;
+        }
+
         let map = {};
-        headers.slice(1).forEach((h, i) => map[h] = values[i]);
+        headers.map(el => el.innerHTML).forEach((h, i) => map[h] = values[i]);
+
+        editing = el.parentNode;
 
         Array.prototype.forEach.call(cells, el => el.style.display = "none");
 
@@ -194,7 +226,7 @@
             "colspan": cells.length
           }).append(
             $("<textarea>", {
-              "rows": cells.length + 2
+              "rows": headers.length + 2
             }).val(JSON.stringify(map, null, 2))
           )
         );
@@ -205,6 +237,7 @@
       }
 
       editing.classList.add("editing");
+      $plugin.trigger($.Event("chabudai:edit", { "target": el }));
     };
 
     const clickInside = function(e) {
@@ -240,6 +273,10 @@
       if (e.which == keycode.ENTER) {
         stopEditing();
       }
+    });
+
+    $plugin.on("click", `th[scope="col"]:first-child`, function(e) {
+      stopEditing();
     });
 
     $plugin.on("click", `th[scope="col"]:not(:first-child)`, function(e) {

@@ -55,6 +55,13 @@
   outline: none;
 }
 
+.table-chabudai td select:disabled {
+  color: inherit;
+  background-color: inherit;
+  background-image: none;
+  cursor: default;
+}
+
 .table-chabudai .selected {
   background-color: #99caff;
 }
