@@ -16,6 +16,7 @@
     $("#table1").table({ "data": iris });
     $("#table2").table({ "data": starwars }); <!-- , "responsive": true }); -->
     $("#table3").table({ "data": populations, "editable": ["country"] });
+    $("#table3").on("chabudai:edited", (e) => console.log("done editing"));
     });
   </script>
 </head>

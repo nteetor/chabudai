@@ -163,6 +163,7 @@
 
       if (editing.tagName.match(/td/i)) {
         editing.classList.remove("editing");
+        editing.firstChild.blur();
       } else if (editing.tagName.match(/tr/i)) {
         let input = editing.querySelector("td textarea");
         let values = JSON.parse(input.value);
