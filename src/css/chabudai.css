@@ -31,6 +31,10 @@
   outline: none;
 }
 
+.table-chabudai td input:disabled {
+  color: inherit;
+}
+
 .table-chabudai td textarea {
   width: 100%;
   border: none;

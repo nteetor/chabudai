@@ -94,6 +94,11 @@
         $plugin[0].nextElementSibling.firstChild &&
         $plugin[0].nextElementSibling.firstChild.classList.contains("pagination")) {
       $plugin[0].parentNode.removeChild($plugin[0].nextElementSibling);
+    } else if ($plugin[0].parentNode.classList.contains("table-responsive") &&
+               $plugin[0].parentNode.nextElementSibling.tagName.match(/nav/i)) {
+      $plugin[0].parentNode.parentNode.removeChild(
+        $plugin[0].parentNode.nextElementSibling
+      );
     }
 
     /*
@@ -416,8 +421,9 @@
      */
     if (options.responsive) {
       $plugin.wrap(`<div class="table-responsive"></div>`);
+    } else if ($plugin[0].parentNode.classList.contains("table-responsive")) {
+      $plugin.unwrap();
     }
-
 
     return $plugin;
   };

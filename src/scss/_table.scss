@@ -33,6 +33,10 @@
       outline: none;
     }
 
+    input:disabled {
+      color: inherit;
+    }
+
     textarea {
       width: 100%;
       border: none;

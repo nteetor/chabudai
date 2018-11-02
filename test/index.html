@@ -14,7 +14,7 @@
   <script>
     $(function() {
     $("#table1").table({ "data": iris });
-    $("#table2").table({ "data": starwars }); <!-- , "responsive": true }); -->
+    $("#table2").table({ "data": starwars, "responsive": true, "nav": { "items": 8 } });
     $("#table3").table({ "data": populations, "editable": ["country"] });
     $("#table3").on("chabudai:edited", (e) => console.log("done editing"));
     });
@@ -23,7 +23,7 @@
 <body>
   <div class="p-5">
     <table id="table1" class="table table-bordered"></table>
-    <table id="table2" data-responsive="true" data-nav-items="8" class="table"></table>
+    <table id="table2""true" class="table"></table>
     <table id="table3" class="table"></table>
   </div>
 </body>
