@@ -84,8 +84,6 @@
       this.append($plugin);
     }
 
-    $plugin[0].classList.add("table-chabudai");
-
     // clear out old contents
     $plugin.empty();
 
@@ -94,11 +92,6 @@
         $plugin[0].nextElementSibling.firstChild &&
         $plugin[0].nextElementSibling.firstChild.classList.contains("pagination")) {
       $plugin[0].parentNode.removeChild($plugin[0].nextElementSibling);
-    } else if ($plugin[0].parentNode.classList.contains("table-responsive") &&
-               $plugin[0].parentNode.nextElementSibling.tagName.match(/nav/i)) {
-      $plugin[0].parentNode.parentNode.removeChild(
-        $plugin[0].parentNode.nextElementSibling
-      );
     }
 
     /*
@@ -404,14 +397,14 @@
         });
       }
 
-      $nav.append($("<ul>", { "class": "pagination justify-content-center" }).append(items));
+      $nav.append($("<ul>", { "class": "pagination" }).append(items));
 
       $nav.on("click", `li[data-page]:not(.active)`, function(e) {
         e.preventDefault();
         pageTo(this);
       });
 
-      $plugin.after($nav);
+      $plugin.prepend($("<caption>").append($nav));
 
       pageTo($nav[0].querySelector(`li[data-page="1"]`));
     }

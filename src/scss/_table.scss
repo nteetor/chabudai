@@ -1,4 +1,12 @@
-.table-chabudai {
+.table {
+  margin-bottom: 3rem;
+
+  caption {
+    nav {
+      position: absolute;
+    }
+  }
+
   tr[aria-hidden] {
     th {
       border: transparent 1px solid;
