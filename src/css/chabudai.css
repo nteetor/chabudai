@@ -75,5 +75,5 @@
 }
 
 .table .selected {
-  background-color: #99caff;
+  background-color: var(--grey);
 }

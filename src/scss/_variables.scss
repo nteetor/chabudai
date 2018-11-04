@@ -5,5 +5,4 @@ $yiq-text-dark:  #212529;
 $yiq-text-light: #fff;
 
 // tables
-$selected-bg:      lighten(#007bff, 30%);
-$selected-border:  color-yiq(#007bff);
+$selected-bg:  var(--grey);
